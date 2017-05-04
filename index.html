@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Layout</title>
+  <style media="screen">
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .flex {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex
+  }
+
+  .hn {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row
+  }
+
+  .vn {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+
+  .wrap-reverse {
+    flex-wrap: wrap-reverse
+  }
+
+  .w50 {
+    width: 50%;
+  }
+
+  .w100 {
+    width: 100%;
+  }
+
+  .w33 {
+    width: 33.33%;
+  }
+
+  .w20 {
+    width: 20%;
+  }
+
+  .f1 {
+    flex: 1;
+  }
+
+  .f2 {
+    flex: 2;
+  }
+
+  .f3 {
+    flex: 3;
+  }
+
+  .f4 {
+    flex: 4;
+  }
+
+  .btn {
+    display: inline-block;/* 设置为内联块 */
+    padding: .5rem 1rem;
+    padding: 6px 16px\9;/* 兼容IE6/7/8/9 */
+    border: 1px solid transparent;/* 边框颜色为透明 */
+    font-size: 1rem;
+    font-size: 17px\9;/* 兼容IE6/7/8/9 */
+    line-height: 1.2;
+    text-align: center;/* 文本水平居中 */
+    letter-spacing: 2px;/* 文字间距 */
+    cursor: pointer;/* 手型光标 */
+    margin: 10px;
+    transition: background-color 300ms ease-out, border-color 300ms ease-out;/* 过渡 */
+    -webkit-transition: background-color 300ms ease-out, border-color 300ms ease-out;
+    -moz-transition: background-color 300ms ease-out, border-color 300ms ease-out;
+    -o-transition: background-color 300ms ease-out, border-color 300ms ease-out;
+  }
+
+  .btn-round {/* 椭圆按钮 */
+    border-radius: 1000px;
+  }
+
+
+  </style>
+</head>
+<body>
+
+  <button style="display: block;margin: 5px auto;" type="button" name="button" onclick="run()" class="btn btn-success btn-round">动态布局</button>
+
+  <section class="flex" id="commend"></section>
+
+<script src="base.js" charset="utf-8"></script>
+<script type="text/javascript">
+var i = 0;
+function run() {
+  var url = 'data' + i + '.json'
+  var html = '';
+  $.ajax( {
+    url: url,
+    success: function( response ) {
+      var commend = response.commend;
+      var goods = response.goods;
+
+      commend.elements.forEach( function( item ) {
+        html += '<a href="' + item.url + '" class="' + item.class + '"><img src="' + item.image + '"></a>';
+      } );
+
+      // 添加容器的 className
+      $( '#commend' ).addClass( function() {
+        return commend.class.join(' ');
+        // 设置内容
+      } ).html( html );
+
+    }
+  } );
+  i++;
+  if ( i > 4 ) i = 0;
+}
+</script>
+</body>
+</html>
